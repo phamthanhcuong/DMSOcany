@@ -1,0 +1,25 @@
+import React from 'react';
+import { Provider } from 'react-redux';
+import { SafeAreaView } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import store from './redux/store'; // Đường dẫn đến store.ts
+import AppNavigator from './navigations/AppNavigator'; // Đường dẫn đến AppNavigator
+import AuthNavigator from './navigations/AuthNavigator'; // Đường dẫn đến AuthNavigator
+import { useSelector } from 'react-redux'; // Import useSelector để lấy trạng thái xác thực
+
+const App: React.FC = () => {
+  // Lấy trạng thái xác thực từ Redux store
+  const isAuthenticated = useSelector((state: any) => state.auth.isAuthenticated); // Đảm bảo rằng state.auth có chứa isAuthenticated
+
+  return (
+    <Provider store={store}>
+        <SafeAreaView style={{ flex: 1 }}>
+          <NavigationContainer>
+            {isAuthenticated ? <AppNavigator /> : <AuthNavigator />}
+          </NavigationContainer>
+        </SafeAreaView>
+    </Provider>
+  );
+};
+
+export default App;
