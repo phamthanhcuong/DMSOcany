@@ -9,26 +9,27 @@ const LoginScreen: React.FC = () => {
   const [password, setPassword] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
 
-  const dispatch: AppDispatch = useDispatch();
+  // Đây là cách chính xác để sử dụng dispatch có kiểu trong TypeScript
+  // const dispatch = useDispatch<AppDispatch>();
 
-  const handleLogin = async () => {
-    if (!email || !password) {
-      Alert.alert('Lỗi', 'Email và mật khẩu không được để trống');
-      return;
-    }
+  // const handleLogin = async () => {
+  //   if (!email || !password) {
+  //     Alert.alert('Lỗi', 'Email và mật khẩu không được để trống');
+  //     return;
+  //   }
 
-    setLoading(true);
+  //   setLoading(true);
     
-    try {
-      // Thực hiện dispatch action login
-      await dispatch(login({ email, password })).unwrap();
-      Alert.alert('Thành công', 'Đăng nhập thành công');
-    } catch (error) {
-      Alert.alert('Lỗi', 'Đăng nhập không thành công');
-    } finally {
-      setLoading(false);
-    }
-  };
+  //   try {
+  //     // Thực hiện dispatch action login
+  //     await dispatch(login({ email, password })).unwrap();
+  //     Alert.alert('Thành công', 'Đăng nhập thành công');
+  //   } catch (error) {
+  //     Alert.alert('Lỗi', 'Đăng nhập không thành công');
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   return (
     <View style={styles.container}>
@@ -51,11 +52,11 @@ const LoginScreen: React.FC = () => {
         secureTextEntry
       />
       
-      {loading ? (
+      {/* {loading ? (
         <Text>Đang xử lý...</Text>
       ) : (
         <Button title="Đăng Nhập" onPress={handleLogin} />
-      )}
+      )} */}
     </View>
   );
 };

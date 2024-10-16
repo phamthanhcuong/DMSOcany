@@ -56,24 +56,92 @@ Now that you have successfully run the app, let's modify it.
    For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
 
 ## Congratulations! :tada:
+## Architect Project
+/root_project
+│
+├── /src
+│   ├── /api                           # Quản lý giao tiếp với API server
+│   │   ├── apiService.ts               # API service chung, cấu hình base URL và token
+│   │   ├── customerApi.ts              # API quản lý khách hàng (GET, POST, PUT, DELETE)
+│   │   ├── orderApi.ts                 # API quản lý đơn hàng
+│   │   ├── authApi.ts                  # API xác thực người dùng
+│   │   └── reportApi.ts                # API lấy báo cáo
+│
+│   ├── /components                     # Thành phần giao diện tái sử dụng
+│   │   ├── buttons                     # Nút bấm tái sử dụng
+│   │   │   └── CustomButton.tsx
+│   │   ├── forms                       # Các form nhập liệu tái sử dụng
+│   │   │   ├── CustomerForm.tsx
+│   │   │   └── OrderForm.tsx
+│   │   ├── lists                       # Các danh sách tái sử dụng
+│   │   │   ├── CustomerList.tsx
+│   │   │   └── OrderList.tsx
+│   │   └── common                      # Thành phần chung như hiển thị lỗi, spinner
+│       │   ├── ErrorMessage.tsx        # Hiển thị thông báo lỗi
+│       │   └── LoadingSpinner.tsx      # Hiển thị hiệu ứng tải
+│
+│   ├── /navigations                    # Quản lý điều hướng ứng dụng
+│   │   ├── AppNavigator.tsx            # Điều hướng chính của app
+│   │   ├── AuthNavigator.tsx           # Điều hướng cho phần xác thực
+│   │   └── CustomerNavigator.tsx       # Điều hướng riêng cho quản lý khách hàng
+│
+│   ├── /screens                        # Các màn hình chính
+│   │   ├── Auth                        # Màn hình xác thực (Login, ChangePassword)
+│   │   │   ├── LoginScreen.tsx
+│   │   │   └── ChangePasswordScreen.tsx
+│   │   ├── Dashboard                   # Màn hình chính
+│   │   ├── Sidebar                     # Màn hình sidebar
+│   │   ├── CustomerManagement          # Quản lý khách hàng
+│   │   │   ├── CustomerListScreen.tsx
+│   │   │   └── AddCustomerScreen.tsx
+│   │   ├── OrderManagement             # Quản lý đơn hàng
+│   │   │   ├── OrderListScreen.tsx
+│   │   │   └── AddOrderScreen.tsx
+│   │   ├── CheckinCheckout             # Quản lý check-in/check-out
+│   │   │   └── CheckinCheckoutScreen.tsx
+│   │   └── Report                      # Màn hình báo cáo
+│       │   └── ReportScreen.tsx
+│
+│   ├── /services                       # Xử lý logic nghiệp vụ và tương tác API/Realm
+│   │   ├── customerService.ts          # Dịch vụ quản lý khách hàng (fetch API, Realm)
+│   │   ├── orderService.ts             # Dịch vụ quản lý đơn hàng
+│   │   ├── authService.ts              # Dịch vụ xác thực người dùng
+│   │   ├── reportService.ts            # Dịch vụ báo cáo
+│   │   └── syncService.ts              # Dịch vụ đồng bộ dữ liệu khi có mạng trở lại
+│
+│   ├── /redux                          # Quản lý trạng thái toàn cục
+│   │   ├── hooks.ts                    # Custom hooks cho Redux
+│   │   ├── store.ts                    # Cấu hình store của Redux
+│   │   ├── slices                      # Quản lý từng phần dữ liệu với Redux slices
+│   │   │   ├── customerSlice.ts        # Trạng thái khách hàng
+│   │   │   ├── orderSlice.ts           # Trạng thái đơn hàng
+│   │   │   ├── authSlice.ts            # Trạng thái xác thực
+│   │   │   └── reportSlice.ts          # Trạng thái báo cáo
+│
+│   ├── /utils                          # Các hàm tiện ích và hằng số dùng chung
+│   │   ├── constants.ts                # Hằng số chung
+│   │   ├── errorHandler.ts             # Hàm xử lý lỗi
+│   │   └── helpers.ts                  # Hàm hỗ trợ (ví dụ format date)
+│
+│   ├── /hooks                          # Custom hooks, ví dụ quản lý mạng
+│   │   └── useNetwork.ts               # Hook quản lý kết nối mạng (online/offline)
+│
+│   ├── /database                       # Quản lý Realm và các schema dữ liệu
+│   │   ├── realmConfig.ts              # Cấu hình Realm
+│   │   ├── schemas                     # Các schema của Realm
+│   │   │   ├── customerSchema.ts       # Schema của khách hàng
+│   │   │   ├── orderSchema.ts          # Schema của đơn hàng
+│   │   │   ├── checkInOutSchema.ts     # Schema check-in/check-out
+│   │   │   └── userSchema.ts           # Schema người dùng
+│
+│   ├── /models                         # Mô hình dữ liệu TypeScript
+│   │   ├── customerModel.ts            # Mô hình khách hàng
+│   │   └── orderModel.ts               # Mô hình đơn hàng
+│
+│   ├── App.tsx                         # Điểm khởi đầu của ứng dụng
+│   └── index.js                        # Entry point chính của ứng dụng
+│
+├── /node_modules                       # Thư viện Node.js
+├── package.json                        # Thông tin gói npm và script
+└── README.md                           # Tài liệu dự án
 
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.

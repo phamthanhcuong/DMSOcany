@@ -1,36 +1,56 @@
-import realm, { Customer } from '../database/realm';
+import realm from '../database/realmConfig';
 import axios from 'axios';
+import NetInfo from '@react-native-community/netinfo'; // Thư viện kiểm tra kết nối mạng
 
-// Hàm đồng bộ dữ liệu từ Realm lên server
+// Địa chỉ API cho đồng bộ hóa dữ liệu
+const API_URL = 'https://api.yourserver.com/sync/';
+
+// Hàm đồng bộ hóa dữ liệu lên server
 export const syncDataToServer = async () => {
-  const unsyncedCustomers = realm.objects('Customer').filtered('isSynced = false');
+  const unsyncedData = realm.objects('YourDataModel').filtered('isSynced = false');
 
-  if (unsyncedCustomers.length > 0) {
-    const customersArray = Array.from(unsyncedCustomers);
+  if (unsyncedData.length > 0) {
+    const dataArray = Array.from(unsyncedData);
     
     try {
       // Gửi dữ liệu lên server
-      await axios.post('https://api.yourserver.com/customers/sync', customersArray);
+      await axios.post(`${API_URL}data`, dataArray);
       
       // Cập nhật trạng thái đã đồng bộ trong Realm
       realm.write(() => {
-        customersArray.forEach(customer => {
-          customer.isSynced = true;
+        dataArray.forEach(item => {
+          item.isSynced = true;
         });
       });
-    } catch (error) {
-      console.error('Error syncing data to server:', error);
+      console.log('Data synced successfully.');
+    } catch (error: unknown) {
+      handleAxiosError(error);
     }
+  } else {
+    console.log('No unsynced data found.');
   }
 };
 
 // Hàm kiểm tra kết nối mạng và thực hiện đồng bộ
-export const checkNetworkAndSync = () => {
-  // Giả sử bạn có một hàm kiểm tra kết nối mạng
-  // Sử dụng thư viện như `react-native-netinfo` để kiểm tra kết nối mạng
-  const isConnected = true; // Bạn cần thay đổi nó bằng cách kiểm tra thực tế
+export const checkNetworkAndSync = async () => {
+  // Kiểm tra kết nối mạng
+  const state = await NetInfo.fetch();
+  const isConnected = state.isConnected;
 
   if (isConnected) {
-    syncDataToServer();
+    await syncDataToServer();
+  } else {
+    console.warn('No internet connection. Syncing will be deferred.');
+  }
+};
+
+// Hàm xử lý lỗi Axios
+const handleAxiosError = (error: unknown) => {
+  if (axios.isAxiosError(error)) {
+    console.error('Error during data sync:', error.response?.data || error.message);
+  } else if (error instanceof Error) {
+    console.error('Error:', error.message);
+  } else {
+    console.error('Unknown error:', error);
   }
 };

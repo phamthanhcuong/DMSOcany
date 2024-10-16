@@ -50,7 +50,14 @@ const AppNavigator: React.FC = () => {
             title: 'Customer Management',
           }}
         />
-        {/* <Drawer.Screen
+        {/* 
+        
+  <Drawer.Screen 
+  name="CustomerManagement" 
+  component={CustomerNavigator} /> // Sử dụng CustomerNavigator 
+
+
+        <Drawer.Screen
           name="CheckInOut"
           component={CheckInOutScreen}
           options={{
