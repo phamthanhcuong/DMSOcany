@@ -1,9 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { loginApi } from '../../api/authApi'; // Giả sử bạn đã tạo một hàm gọi API cho đăng nhập
-
-interface User {
-  email: string;
-}
+import { User } from '../../models/authModel'; 
 
 interface AuthState {
   isAuthenticated: boolean;
@@ -20,7 +17,7 @@ const initialState: AuthState = {
 };
 
 // Action để thực hiện đăng nhập
-export const login = createAsyncThunk('auth/login', async (credentials: { email: string; password: string }) => {
+export const login = createAsyncThunk('auth/login', async (credentials: { username: string; password: string }) => {
   const response = await loginApi(credentials);
   return response; // Giả sử response chứa thông tin người dùng sau khi đăng nhập thành công
 });
@@ -43,7 +40,14 @@ const authSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.loading = false;
         state.isAuthenticated = true;
-        state.user = { email: action.payload.email }; // Gán đối tượng phù hợp cho user
+        state.user = { 
+          phone: action.payload.phone,
+          email: action.payload.email,
+          id: action.payload.id,
+          username: action.payload.username,
+          createdAt: action.payload.createdAt,
+          updatedAt: action.payload.updatedAt
+         }; // Gán đối tượng phù hợp cho user
       })
       .addCase(login.rejected, (state, action) => {
         state.loading = false;

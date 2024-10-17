@@ -6,7 +6,7 @@ const AUTH_API_BASE_URL = 'https://api.yourservice.com/auth';
 
 // Định nghĩa hàm để đăng nhập
 // Trong file authApi.ts
-export const loginApi = async (credentials: { email: string; password: string }) => {
+export const loginApi = async (credentials: { username: string; password: string }) => {
     // Giả sử bạn gọi một API và nhận được phản hồi
     const response = await fetch('https://example.com/api/login', {
       method: 'POST',

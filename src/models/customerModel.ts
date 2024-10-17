@@ -10,7 +10,7 @@ export interface Customer {
   isActive: boolean;           // Trạng thái hoạt động của khách hàng
 }
 
-// Định nghĩa kiểu dữ liệu cho địa chỉ (nếu cần chi tiết hơn)
+// Định nghĩa kiểu dữ liệu cho địa chỉ 
 export interface Address {
   street: string;              // Tên đường
   city: string;                // Thành phố
