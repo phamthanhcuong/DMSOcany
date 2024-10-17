@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { View, TextInput, Text, StyleSheet, TouchableOpacity, Alert, Animated } from 'react-native';
+import { View, TextInput, Text, StyleSheet, TouchableOpacity, Alert, Animated, Image, Dimensions } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { useDispatch } from 'react-redux';
 import { login } from '../../redux/slices/authSlice';
 import { AppDispatch } from '../../redux/store';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
+const { width, height } = Dimensions.get('window');
 
 const LoginScreen: React.FC = () => {
   const [username, setUserName] = useState<string>('');
@@ -65,6 +67,7 @@ const LoginScreen: React.FC = () => {
   return (
     <LinearGradient colors={['#001f3f', '#005bb5']} style={styles.gradient}>
       <View style={styles.container}>
+        <Image source={require('../../assets/images/logo.png')} style={styles.logo} /> 
         <Text style={styles.title}>Welcome to the Future</Text>
 
         <Animated.View style={[styles.inputContainer, animatedStyle]}>
@@ -117,8 +120,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 20,
   },
+  logo: {
+    width: "80%", // Adjust width as a percentage of the container
+    height: undefined, // Maintain aspect ratio
+    aspectRatio: 3.55, // Adjust this ratio based on your logo's aspect ratio
+    marginBottom: 20, // Space between logo and title
+  },
   title: {
-    fontSize: 36,
+    fontSize: 30,
     color: '#fff',
     marginBottom: 40,
     fontWeight: 'bold',
@@ -139,8 +148,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     color: '#333',
     fontSize: 16,
-    borderWidth: 2,
-    borderColor: '#0a84ff',
+    //borderWidth: 2,
+    //borderColor: '#0a84ff',
   },
   forgotPassword: {
     color: '#b0c4de',
@@ -165,9 +174,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: 20,
-    padding: 10,
-    borderRadius: 25,
-    backgroundColor: '#0a84ff',
+    // padding: 10,
+    // borderRadius: 25,
+    // backgroundColor: '#0a84ff',
+    
   },
   faceIDText: {
     color: '#fff',

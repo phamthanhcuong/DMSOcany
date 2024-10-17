@@ -27,10 +27,10 @@ const App: React.FC = () => {
     <Provider store={store}>
       <PersistGate loading={<LoadingSpinner />} persistor={persistor}>
         <SafeAreaProvider>
-          <SafeAreaView style={{ flex: 1 }}>
+          {/* <SafeAreaView style={{ flex: 1 }}> */}
             <StatusBar animated={true} backgroundColor="#001f3f" />
             <MainNavigator />
-          </SafeAreaView>
+          {/* </SafeAreaView> */}
         </SafeAreaProvider>
       </PersistGate>
     </Provider>
