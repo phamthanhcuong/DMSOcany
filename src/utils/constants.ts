@@ -1,5 +1,5 @@
 // URL của API
-export const API_URL = 'https://api.example.com/v1';
+export const API_URL = 'https://apidev.drinkocany.com/';
 
 // Các mã trạng thái HTTP
 export const HTTP_STATUS = {
@@ -13,6 +13,11 @@ export const HTTP_STATUS = {
   INTERNAL_SERVER_ERROR: 500,
 };
 
+// Các thông báo thông dụng
+export const MESSAGES_HEADER = {
+  SUCCESS: 'Thành công',
+  ERROR: 'Lỗi'
+};
 // Các thông báo thông dụng
 export const MESSAGES = {
   SUCCESS: 'Thành công!',

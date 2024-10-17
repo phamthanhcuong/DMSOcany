@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
-import { View, TextInput, Text, StyleSheet, TouchableOpacity, Alert, Animated, Image, Dimensions } from 'react-native';
+import { View, TextInput, Text, StyleSheet, TouchableOpacity, Alert, Animated, Image } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { useDispatch } from 'react-redux';
 import { login } from '../../redux/slices/authSlice';
 import { AppDispatch } from '../../redux/store';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const { width, height } = Dimensions.get('window');
 
-const LoginScreen: React.FC = () => {
+const LoginScreen: React.FC = ( navigation ) => {
   const [username, setUserName] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
@@ -24,9 +23,10 @@ const LoginScreen: React.FC = () => {
     setLoading(true);
     try {
       await dispatch(login({ username, password })).unwrap();
-      Alert.alert('Thành công', 'Đăng nhập thành công');
+      //Alert.alert('Thành công', 'Đăng nhập thành công');
+      //navigation.replace('Home');
     } catch (error) {
-      Alert.alert('Lỗi', 'Đăng nhập thất bại');
+      Alert.alert('Lỗi', 'Đăng nhập thất bại' + error);
     } finally {
       setLoading(false);
     }
