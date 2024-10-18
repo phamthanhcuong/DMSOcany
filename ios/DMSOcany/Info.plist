@@ -65,16 +65,18 @@
 		<string>Zocial.ttf</string>
 	</array>
 	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>Ứng dụng cần truy cập vào bluetooth</string>
+	<string>Ứng dụng $(PRODUCT_NAME) cần truy cập vào bluetooth</string>
 	<key>NSCameraUsageDescription</key>
-	<string>$(PRODUCT_NAME) Ứng dụng cần truy cập vào Camera</string>
+	<string>Ứng dụng $(PRODUCT_NAME) cần truy cập vào Camera để chụp ảnh.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Ứng dụng cần truy cập vào vị trí của bạn để cung cấp dịch vụ chính xác.</string>
+	<string>Ứng dụng $(PRODUCT_NAME) cần truy cập vào vị trí của bạn.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Ứng dụng cần truy cập vào vị trí của bạn khi sử dụng để xác định vị trí .</string>
+	<string>Ứng dụng $(PRODUCT_NAME) cần truy cập vào vị trí của bạn ngay cả khi ứng dụng không hoạt động.</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>$(PRODUCT_NAME) Ứng dụng cần truy cập vào Microphone</string>
+	<string>Ứng dụng $(PRODUCT_NAME) cần truy cập vào Microphone để ghi âm.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Ứng dụng cần truy cập vào thư viện ảnh để cho phép người dùng tải lên ảnh.</string>
+	<key>NSFaceIDUsageDescription</key>
+  <string>[Ứng dụng $(PRODUCT_NAME) cần truy cập vào FaceID</string>
 </dict>
 </plist>

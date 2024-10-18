@@ -1,10 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { loginUser } from '../../api/authApi';
-import { User } from '../../models/authModel';
 
 interface AuthState {
   isAuthenticated: boolean;
-  user: User | null;
+  username: null | string;
   token: null | string;
   loading: boolean;
   error: null | string;
@@ -12,7 +11,7 @@ interface AuthState {
 
 const initialState: AuthState = {
   isAuthenticated: false,
-  user: null,
+  username: null,
   token: null,
   loading: false,
   error: null,
@@ -21,7 +20,7 @@ const initialState: AuthState = {
 // Async action for login
 export const login = createAsyncThunk('auth/login', async (credentials: { username: string; password: string }) => {
   const response = await loginUser(credentials.username, credentials.password);
-  return response.data;
+  return { token: response, username: credentials.username };
 });
 
 const authSlice = createSlice({
@@ -30,7 +29,7 @@ const authSlice = createSlice({
   reducers: {
     logout(state) {
       state.isAuthenticated = false;
-      state.user = null;
+      state.username = null;
       state.token = null;
     },
   },
@@ -43,8 +42,8 @@ const authSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.loading = false;
         state.isAuthenticated = true;
-        state.token = action.payload;
-        //state.user = action.payload; // Assuming payload contains user data
+        state.token = action.payload.token; 
+        state.username = action.payload.username;
       })
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
