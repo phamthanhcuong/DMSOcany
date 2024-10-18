@@ -10,6 +10,18 @@ const DashboardScreen: React.FC = () => {
   const dispatch = useDispatch();
   const user = useSelector((state: any) => state.auth.user);
 
+// Hàm để lấy lời chào theo thời gian trong ngày
+const getGreeting = () => {
+  const currentHour = new Date().getHours();
+  if (currentHour < 12) {
+    return 'Chào buổi sáng';
+  } else if (currentHour < 18) {
+    return 'Chào buổi chiều';
+  } else {
+    return 'Chào buổi tối';
+  }
+};
+
   const handleLogout = () => {
     dispatch(logout());
     //Alert.alert('Logged out', 'You have been logged out successfully.');
@@ -22,17 +34,17 @@ const DashboardScreen: React.FC = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerText}>Welcome, {user?.username || 'User'}!</Text>
+        <Text style={styles.headerText}>Chào, {user?.username || 'User'}!</Text>
         <TouchableOpacity onPress={handleLogout} style={styles.logoutButton}>
           <Icon name="logout" size={20} color="#ffffff" />
-          <Text style={styles.logoutButtonText}>Logout</Text>
+          <Text style={styles.logoutButtonText}>Đăng xuất</Text>
         </TouchableOpacity>
       </View>
 
       <View style={styles.menuContainer}>
         <TouchableOpacity style={styles.menuItem} onPress={() => navigateTo('CustomerModule')}>
           <Icon name="account-multiple" size={40} color="#00c9ff" />
-          <Text style={styles.menuText}>Khách hàng</Text>
+          <Text style={styles.menuText}>Viếng thăm</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.menuItem} onPress={() => navigateTo('OrderModule')}>
@@ -42,23 +54,23 @@ const DashboardScreen: React.FC = () => {
 
         <TouchableOpacity style={styles.menuItem} onPress={() => navigateTo('CheckinCheckoutModule')}>
           <Icon name="map-marker-check" size={40} color="#00c9ff" />
-          <Text style={styles.menuText}>Checkin/Checkout</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.menuItem} onPress={() => navigateTo('SyncDataModule')}>
-          <Icon name="sync" size={40} color="#00c9ff" />
-          <Text style={styles.menuText}>Sync Data</Text>
+          <Text style={styles.menuText}>Chấm công</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.menuItem} onPress={() => navigateTo('ReportModule')}>
           <Icon name="chart-bar" size={40} color="#00c9ff" />
-          <Text style={styles.menuText}>Report</Text>
+          <Text style={styles.menuText}>Báo cáo</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.menuItem} onPress={() => Alert.alert('Khác', 'Tính năng này sẽ sớm được ra mắt!')}>
-          <Icon name="dots-horizontal" size={40} color="#00c9ff" />
-          <Text style={styles.menuText}>Other</Text>
-        </TouchableOpacity>
+<TouchableOpacity style={styles.menuItem} onPress={() => Alert.alert('Khác', 'Tính năng này sẽ sớm được ra mắt!')}>
+  <Icon name="dots-horizontal" size={40} color="#00c9ff" />
+  <Text style={styles.menuText}>Giám sát</Text>
+</TouchableOpacity>
+
+<TouchableOpacity style={styles.menuItem} onPress={() => navigateTo('SyncDataModule')}>
+  <Icon name="sync" size={40} color="#00c9ff" />
+  <Text style={styles.menuText}>Đồng bộ</Text>
+</TouchableOpacity>
       </View>
     </ScrollView>
   );

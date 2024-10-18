@@ -1,4 +1,3 @@
-// src/App.tsx
 import 'react-native-gesture-handler';
 import React from 'react';
 import { Provider } from 'react-redux';
@@ -11,6 +10,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { store, persistor } from './redux/store';
 import LoadingSpinner from './components/common/LoadingSpinner';
 import { useSelector } from 'react-redux';
+import { COLORS } from './utils/constants';
 
 const MainNavigator = () => {
   const isAuthenticated = useSelector((state: any) => state.auth.isAuthenticated);
@@ -27,10 +27,10 @@ const App: React.FC = () => {
     <Provider store={store}>
       <PersistGate loading={<LoadingSpinner />} persistor={persistor}>
         <SafeAreaProvider>
-          {/* <SafeAreaView style={{ flex: 1 }}> */}
-            <StatusBar animated={true} backgroundColor="#001f3f" />
+          <SafeAreaView style={{ flex: 1 , backgroundColor: COLORS.PRIMARY}}>
+            <StatusBar animated={true} backgroundColor = {COLORS.PRIMARY} />
             <MainNavigator />
-          {/* </SafeAreaView> */}
+          </SafeAreaView>
         </SafeAreaProvider>
       </PersistGate>
     </Provider>

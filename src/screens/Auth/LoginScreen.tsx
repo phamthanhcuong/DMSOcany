@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { login } from '../../redux/slices/authSlice';
 import { AppDispatch } from '../../redux/store';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { COLORS } from '../../utils/constants';
 
 
 const LoginScreen: React.FC = ( navigation ) => {
@@ -56,14 +57,14 @@ const LoginScreen: React.FC = ( navigation ) => {
 
   // Style for glowing effect
   const animatedStyle = {
-    shadowColor: '#0a84ff',
+    shadowColor: COLORS.ANIMATED,
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: glowAnim,
     shadowRadius: 10,
   };
 
   return (
-    <LinearGradient colors={['#001f3f', '#005bb5']} style={styles.gradient}>
+    <LinearGradient colors={[COLORS.PRIMARY, COLORS.SECONDNARY]} style={styles.gradient}>
       <View style={styles.container}>
         <Image source={require('../../assets/images/logo.png')} style={styles.logo} /> 
         <Text style={styles.title}>Welcome to the Future</Text>
@@ -72,7 +73,7 @@ const LoginScreen: React.FC = ( navigation ) => {
           <TextInput
             style={styles.input}
             placeholder="Tài khoản"
-            placeholderTextColor="#8a8a8a"
+            placeholderTextColor={COLORS.PLACEHOLDER}
             value={username}
             onChangeText={setUserName}
             keyboardType="email-address"
@@ -84,7 +85,7 @@ const LoginScreen: React.FC = ( navigation ) => {
           <TextInput
             style={styles.input}
             placeholder="Mật khẩu"
-            placeholderTextColor="#8a8a8a"
+            placeholderTextColor={COLORS.PLACEHOLDER}
             value={password}
             onChangeText={setPassword}
             secureTextEntry
@@ -100,7 +101,7 @@ const LoginScreen: React.FC = ( navigation ) => {
         </TouchableOpacity>
 
         <TouchableOpacity style={[styles.faceIDButton, animatedStyle]} onPress={handleFaceIDLogin}>
-          <Icon name="face-recognition" size={30} color="#fff" />
+          <Icon name="face-recognition" size={30} color={COLORS.WHITE} />
           <Text style={styles.faceIDText}>Đăng nhập bằng Face ID</Text>
         </TouchableOpacity>
       </View>
@@ -141,30 +142,28 @@ const styles = StyleSheet.create({
   input: {
     width: '100%',
     height: 50,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: COLORS.BACKGROUD_INPUT,
     borderRadius: 25,
     paddingHorizontal: 20,
-    color: '#333',
+    color: COLORS.INPUT,
     fontSize: 16,
-    //borderWidth: 2,
-    //borderColor: '#0a84ff',
   },
   forgotPassword: {
-    color: '#b0c4de',
+    color: COLORS.LABEL,
     marginBottom: 20,
     textDecorationLine: 'underline',
   },
   loginButton: {
     width: '90%',
     height: 50,
-    backgroundColor: '#0d47a1',
+    backgroundColor: COLORS.BACKGROUD_LOGIN,
     borderRadius: 25,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 20,
   },
   loginButtonText: {
-    color: '#fff',
+    color: COLORS.WHITE,
     fontSize: 18,
     fontWeight: 'bold',
   },
@@ -172,13 +171,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: 20,
-    // padding: 10,
-    // borderRadius: 25,
-    // backgroundColor: '#0a84ff',
     
   },
   faceIDText: {
-    color: '#fff',
+    color: COLORS.WHITE,
     marginLeft: 10,
     fontSize: 18,
   },

@@ -1,3 +1,5 @@
+import {Platform} from 'react-native';
+
 // URL của API
 export const API_URL = 'https://apidev.drinkocany.com/';
 
@@ -26,8 +28,28 @@ export const MESSAGES = {
   NO_INTERNET: 'Không có kết nối Internet. Vui lòng kiểm tra lại.',
 };
 
+
+// Các thông báo thông dụng
+export const COLORS = {
+  PRIMARY: '#141e30',
+  SECONDNARY: '#005bb5',
+  SUCCESS: 'Đang tải...',
+  WARNING: 'Không có kết nối Internet. Vui lòng kiểm tra lại.',
+  ERROR: 'Không có kết nối Internet. Vui lòng kiểm tra lại.',
+  BACKGROUD_INPUT: "#f0f0f0",
+  BACKGROUD_LOGIN: "#0d47a1",
+  INPUT:"#333",
+  LABEL:"#b0c4de",
+  PLACEHOLDER: "#8a8a8a",
+  ANIMATED:"#0a84ff",
+  BLACK:"#000",
+  WHITE:"#fff",
+};
+
 // Các hằng số khác
 export const MAX_CUSTOMERS_PER_PAGE = 10; // Số lượng khách hàng tối đa trên mỗi trang
 
 // Thời gian timeout cho các yêu cầu API (ms)
-export const API_TIMEOUT = 100
+export const API_TIMEOUT = 100;
+
+export const isIos = Platform.OS === 'ios';

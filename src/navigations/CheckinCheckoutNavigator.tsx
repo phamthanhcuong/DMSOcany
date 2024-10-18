@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import ReportScreen from '../screens/CheckinCheckout/CheckinCheckoutScreen';
+import CheckinCheckoutScreen from '../screens/CheckinCheckout/CheckinCheckoutScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
 
 const Stack = createStackNavigator();
@@ -12,7 +12,7 @@ const CheckinCheckoutNavigator: React.FC = () => {
     >
       <Stack.Screen 
         name="CheckinCheckoutScreen" 
-        component={ReportScreen} 
+        component={CheckinCheckoutScreen} 
         options={{ headerShown: false }} 
       />
       
