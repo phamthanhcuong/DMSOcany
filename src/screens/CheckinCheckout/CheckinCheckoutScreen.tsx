@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
 
-const OrderListScreen: React.FC = () => {
+const CheckinCheckoutScreen: React.FC = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>OrderListScreen</Text>
+      <Text >CheckinCheckoutScreen</Text>
     </View>
   );
 };
@@ -29,5 +29,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default OrderListScreen;
+export default CheckinCheckoutScreen;
+
+
 

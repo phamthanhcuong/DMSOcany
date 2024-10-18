@@ -23,8 +23,6 @@ const LoginScreen: React.FC = ( navigation ) => {
     setLoading(true);
     try {
       await dispatch(login({ username, password })).unwrap();
-      //Alert.alert('Thành công', 'Đăng nhập thành công');
-      //navigation.replace('Home');
     } catch (error) {
       Alert.alert('Lỗi', 'Đăng nhập thất bại' + error);
     } finally {

@@ -20,9 +20,7 @@ const initialState: AuthState = {
 
 // Async action for login
 export const login = createAsyncThunk('auth/login', async (credentials: { username: string; password: string }) => {
-  console.log("Start Đăng nhập");
   const response = await loginUser(credentials.username, credentials.password);
-  console.log("Đăng nhập" + response);
   return response.data;
 });
 
