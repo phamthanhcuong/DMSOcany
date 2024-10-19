@@ -1,40 +1,34 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, Alert, PermissionsAndroid, Platform } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  Alert,
+  PermissionsAndroid,
+} from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import { launchCamera } from 'react-native-image-picker';
 import { request, PERMISSIONS, RESULTS } from 'react-native-permissions';
-import {isIos, COLORS} from '../../utils/constants';
+import Geocoder from 'react-native-geocoding';
+import { isIos, COLORS, GOOGLE_MAPS_API_KEY } from '../../utils/constants';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+// Initialize Geocoding API
+Geocoder.init(GOOGLE_MAPS_API_KEY); // Replace with your Google Maps API key
 
 const CheckinCheckoutScreen = () => {
   const [imageUri, setImageUri] = useState<string | null>(null);
-  const [location, setLocation] = useState<{ latitude: number; longitude: number } | null>(null);
+  const [location, setLocation] = useState<{
+    latitude: number;
+    longitude: number;
+    address: string;
+  } | null>(null);
   const [timer, setTimer] = useState<string>('0:00:00');
   const [isTiming, setIsTiming] = useState<boolean>(false);
   const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
-
-  const startTimer = () => {
-    setIsTiming(true);
-    const startTime = new Date().getTime();
-
-    const id = setInterval(() => {
-      const elapsedTime = new Date().getTime() - startTime;
-      const hours = Math.floor(elapsedTime / (1000 * 60 * 60));
-      const minutes = Math.floor((elapsedTime % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((elapsedTime % (1000 * 60)) / 1000);
-      setTimer(`${hours}:${minutes}:${seconds < 10 ? `0${seconds}` : seconds}`);
-    }, 1000);
-
-    setIntervalId(id);
-  };
-
-  const stopTimer = () => {
-    if (intervalId) {
-      clearInterval(intervalId);
-      setIntervalId(null);
-    }
-    setIsTiming(false);
-  };
-
+  const [startTime, setStartTime] = useState<number | null>(null);
 
   const requestLocationPermission = async () => {
     try {
@@ -60,10 +54,19 @@ const CheckinCheckoutScreen = () => {
 
   const getCurrentLocation = () => {
     Geolocation.getCurrentPosition(
-      (position) => {
+      async (position) => {
         const { latitude, longitude } = position.coords;
-        setLocation({ latitude, longitude });
-        Alert.alert('Location', `Latitude: ${latitude}, Longitude: ${longitude}`);
+        try {
+          const geocodeResponse = await Geocoder.from(latitude, longitude);
+          const address = geocodeResponse.results[0].formatted_address;
+
+          setLocation({ latitude, longitude, address });
+          Alert.alert('Location', `Address: ${address}\nLatitude: ${latitude}, Longitude: ${longitude}`);
+        } catch (error) {
+          console.error('Geocoding error:', error);
+          setLocation({ latitude, longitude, address: 'Unable to retrieve address' });
+          Alert.alert('Location', `Latitude: ${latitude}, Longitude: ${longitude}`);
+        }
       },
       (error) => {
         Alert.alert('Error', 'Unable to fetch location. Please try again.');
@@ -113,7 +116,7 @@ const CheckinCheckoutScreen = () => {
   };
 
   const handleCheckin = () => {
-    isTiming ? stopTimer : startTimer;
+    isTiming ? stopTimer() : startTimer();
     if (!isIos) {
       requestLocationPermission();
       requestCameraPermission();
@@ -122,15 +125,80 @@ const CheckinCheckoutScreen = () => {
     getCurrentLocation();
   };
 
+  const startTimer = async () => {
+    const storedStartTime = await AsyncStorage.getItem('timerStartTime');
+    const storedDate = await AsyncStorage.getItem('timerStartDate');
+    const currentDate = new Date().toLocaleDateString();
+
+    if (storedStartTime && storedDate === currentDate) {
+      setIsTiming(true);
+      return;
+    }
+
+    const currentTime = startTime || new Date().getTime();
+    setStartTime(currentTime);
+
+    const startDate = currentDate;
+    await AsyncStorage.setItem('timerStartDate', startDate);
+
+    const id = setInterval(() => {
+      const elapsedTime = new Date().getTime() - currentTime;
+      const hours = Math.floor(elapsedTime / (1000 * 60 * 60));
+      const minutes = Math.floor((elapsedTime % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((elapsedTime % (1000 * 60)) / 1000);
+      setTimer(`${hours}:${minutes}:${seconds < 10 ? `0${seconds}` : seconds}`);
+    }, 1000);
+
+    setIntervalId(id);
+    AsyncStorage.setItem('timerStartTime', currentTime.toString());
+  };
+
+  const stopTimer = async () => {
+    const currentDate = new Date().toLocaleDateString();
+    const storedDate = await AsyncStorage.getItem('timerStartDate');
+
+    if (storedDate === currentDate) {
+      setIsTiming(false);
+      //Alert.alert('Timer stopped', 'Bạn đã dừng timer thành công trong ngày hiện tại.');
+    } else {
+      //Alert.alert('New Day', 'Ngày đã thay đổi. Timer sẽ được reset.');
+      //resetTimer();
+    }
+  };
+
+  const resetTimer = () => {
+    setTimer('0:00:00');
+    setIsTiming(false);
+    setStartTime(null);
+    if (intervalId) clearInterval(intervalId);
+    setIntervalId(null);
+    AsyncStorage.removeItem('timerStartTime');
+    AsyncStorage.removeItem('timerStartDate');
+  };
+
+  const restoreTimerState = async () => {
+    const storedStartTime = await AsyncStorage.getItem('timerStartTime');
+    const storedDate = await AsyncStorage.getItem('timerStartDate');
+    const currentDate = new Date().toLocaleDateString();
+
+    if (storedStartTime && storedDate === currentDate) {
+      setStartTime(parseInt(storedStartTime));
+      setIsTiming(true);
+    }
+    else {
+      resetTimer();
+    }
+  };
+
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Chấm công</Text>
       <Text style={styles.date}>{new Date().toLocaleDateString()}</Text>
 
       <TouchableOpacity onPress={handleCheckin} style={styles.checkinButton}>
-        <Text style={styles.buttonText}><Text style={styles.buttonText}>{imageUri ? 'ĐÃ CHECK-IN' : 'BẮT ĐẦU'}</Text></Text>
+        <Text style={styles.buttonText}>{imageUri ? 'ĐÃ CHECK-IN' : 'BẮT ĐẦU'}</Text>
       </TouchableOpacity>
-
 
       <Text style={styles.timer}>{timer}</Text>
 
@@ -138,7 +206,7 @@ const CheckinCheckoutScreen = () => {
 
       {location && (
         <Text style={styles.locationText}>
-          Vị trí: {location.latitude}, {location.longitude}
+          Vị trí: {location.address} ({location.latitude}, {location.longitude})
         </Text>
       )}
     </View>
@@ -192,5 +260,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
 });
+
 
 export default CheckinCheckoutScreen;

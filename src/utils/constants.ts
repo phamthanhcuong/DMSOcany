@@ -2,6 +2,7 @@ import {Platform} from 'react-native';
 
 // URL của API
 export const API_URL = 'https://apidev.drinkocany.com/';
+export const GOOGLE_MAPS_API_KEY = "AIzaSyCjYC5TPfi3uBLj3OW_Rn422GTzlVzoo98";
 
 // Các mã trạng thái HTTP
 export const HTTP_STATUS = {
