@@ -10,6 +10,7 @@ import OrderNavigator from './OrderNavigator';
 import CheckinCheckoutNavigator from './CheckinCheckoutNavigator';
 import ReportNavigator from './ReportNavigator';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { COLORS } from '../utils/constants';
 
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
@@ -19,10 +20,10 @@ const AppNavigator: React.FC = () => {
   return ( 
         <Stack.Navigator >
         <Stack.Screen name="Dashboard" component={MainTabNavigator}  options={{ headerShown: false, title: "<", }} />
-        <Stack.Screen name="CustomerModule" component={CustomerNavigator} options={{ title: "Viếng thăm", }}/>
-        <Stack.Screen name="OrderModule" component={OrderNavigator}   options={{ title: "Đơn hàng", }} />
-        <Stack.Screen name="CheckinCheckoutModule" component={CheckinCheckoutNavigator} options={{ title: "Chấm công", }}/>
-        <Stack.Screen name="ReportModule" component={ReportNavigator}  options={{ title: "Báo cáo", }}/>
+        <Stack.Screen name="CustomerModule" component={CustomerNavigator} options={{ headerShown: false, title: "Viếng thăm", }}/>
+        <Stack.Screen name="OrderModule" component={OrderNavigator}   options={{ headerShown: false, title: "Đơn hàng", }} />
+        <Stack.Screen name="CheckinCheckoutModule" component={CheckinCheckoutNavigator} options={{ headerShown: false, title: "Chấm công", }}/>
+        <Stack.Screen name="ReportModule" component={ReportNavigator}  options={{ headerShown: false, title: "Báo cáo", }}/>
         </Stack.Navigator>
   );
 };

@@ -71,7 +71,7 @@ const DashboardScreen: React.FC = () => {
       }
     } catch (error) {
       console.error("Lỗi khi Cấp quyền: ", error);
-      Alert.alert('Permission Error', 'An error occurred while requesting permissions.');
+      Alert.alert('Lỗi khi Cấp quyền', 'Có lỗi đã xuất hiện khi yêu cầu cấp quyền.');
     }
   };
 
@@ -97,7 +97,7 @@ const DashboardScreen: React.FC = () => {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <View  style={styles.container} >
       <View style={styles.header}>
         <Text style={styles.headerText}>
           {getGreeting()}, {username || 'User'}!
@@ -138,14 +138,14 @@ const DashboardScreen: React.FC = () => {
           <Text style={styles.menuText}>Đồng bộ</Text>
         </TouchableOpacity>
       </View>
-    </ScrollView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    backgroundColor: '#141e30',
+    backgroundColor: COLORS.PRIMARY,
     padding: 20,
   },
   header: {
@@ -154,9 +154,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 30,
     padding: 15,
-    backgroundColor: '#1f4068',
+    backgroundColor: COLORS.BACKGROUD_HEADER,
     borderRadius: 12,
-    shadowColor: '#00c9ff',
+    shadowColor: COLORS.SHADOW_HEADER,
     shadowOffset: { width: 0, height: 10 },
     shadowOpacity: 0.4,
     shadowRadius: 10,
@@ -164,23 +164,23 @@ const styles = StyleSheet.create({
   },
   headerText: {
     fontSize: 24,
-    color: '#e4e4e4',
+    color: COLORS.TEXT_HEADER,
     fontWeight: 'bold',
   },
   logoutButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#ff4b5c',
+    backgroundColor: COLORS.BACKGROUD_LOGOUT,
     paddingVertical: 5,
-    paddingHorizontal: 15,
+    paddingHorizontal: 10,
     borderRadius: 20,
-    shadowColor: '#ff4b5c',
+    shadowColor: COLORS.SHADOW_LOGOUT,
     shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.6,
     shadowRadius: 8,
   },
   logoutButtonText: {
-    color: '#ffffff',
+    color: COLORS.WHITE,
     marginLeft: 5,
   },
   menuContainer: {
@@ -190,14 +190,14 @@ const styles = StyleSheet.create({
   },
   menuItem: {
     width: '48%',
-    backgroundColor: '#162447',
+    backgroundColor: COLORS.BACKGROUD_ITEM,
     padding: 20,
     borderRadius: 15,
     alignItems: 'center',
     marginBottom: 15,
-    borderColor: '#00c9ff',
+    borderColor: COLORS.WHITE,
     borderWidth: 1.5,
-    shadowColor: '#00c9ff',
+    shadowColor: COLORS.SHADOW_ITEM,
     shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 0.5,
     shadowRadius: 15,
@@ -206,7 +206,7 @@ const styles = StyleSheet.create({
   menuText: {
     marginTop: 10,
     fontSize: 18,
-    color: '#00c9ff',
+    color: COLORS.TEXT_ITEM,
     fontWeight: '600',
   },
 });

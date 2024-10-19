@@ -35,15 +35,31 @@ export const COLORS = {
   SECONDNARY: '#005bb5',
   SUCCESS: 'Đang tải...',
   WARNING: 'Không có kết nối Internet. Vui lòng kiểm tra lại.',
-  ERROR: 'Không có kết nối Internet. Vui lòng kiểm tra lại.',
+  ERROR: '#ff4b5c',
+
   BACKGROUD_INPUT: "#f0f0f0",
   BACKGROUD_LOGIN: "#0d47a1",
+
+  BACKGROUD_HEADER: "#1f4068",
+  SHADOW_HEADER:"#00c9ff",
+  TEXT_HEADER:"#e4e4e4",
+
   INPUT:"#333",
-  LABEL:"#b0c4de",
+  LABEL:"#e4e4e4",
   PLACEHOLDER: "#8a8a8a",
   ANIMATED:"#0a84ff",
+
+  TEXT_FORGETPASSWORD:"#b0c4de",
+
   BLACK:"#000",
   WHITE:"#fff",
+
+  SHADOW_LOGOUT:'#ff4b5c',
+  BACKGROUD_LOGOUT: "#ff4b5c",
+
+  BACKGROUD_ITEM: "#162447",
+  SHADOW_ITEM:"#00c9ff",
+  TEXT_ITEM:"#00c9ff",
 };
 
 // Các hằng số khác

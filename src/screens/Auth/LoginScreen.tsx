@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   forgotPassword: {
-    color: COLORS.LABEL,
+    color: COLORS.TEXT_FORGETPASSWORD,
     marginBottom: 20,
     textDecorationLine: 'underline',
   },

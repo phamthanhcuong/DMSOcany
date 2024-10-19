@@ -2,11 +2,39 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, Alert, PermissionsAndroid, Platform } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import { launchCamera } from 'react-native-image-picker';
+import { request, PERMISSIONS, RESULTS } from 'react-native-permissions';
 import {isIos, COLORS} from '../../utils/constants';
 
 const CheckinCheckoutScreen = () => {
   const [imageUri, setImageUri] = useState<string | null>(null);
   const [location, setLocation] = useState<{ latitude: number; longitude: number } | null>(null);
+  const [timer, setTimer] = useState<string>('0:00:00');
+  const [isTiming, setIsTiming] = useState<boolean>(false);
+  const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
+
+  const startTimer = () => {
+    setIsTiming(true);
+    const startTime = new Date().getTime();
+
+    const id = setInterval(() => {
+      const elapsedTime = new Date().getTime() - startTime;
+      const hours = Math.floor(elapsedTime / (1000 * 60 * 60));
+      const minutes = Math.floor((elapsedTime % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((elapsedTime % (1000 * 60)) / 1000);
+      setTimer(`${hours}:${minutes}:${seconds < 10 ? `0${seconds}` : seconds}`);
+    }, 1000);
+
+    setIntervalId(id);
+  };
+
+  const stopTimer = () => {
+    if (intervalId) {
+      clearInterval(intervalId);
+      setIntervalId(null);
+    }
+    setIsTiming(false);
+  };
+
 
   const requestLocationPermission = async () => {
     try {
@@ -85,6 +113,7 @@ const CheckinCheckoutScreen = () => {
   };
 
   const handleCheckin = () => {
+    isTiming ? stopTimer : startTimer;
     if (!isIos) {
       requestLocationPermission();
       requestCameraPermission();
@@ -99,10 +128,11 @@ const CheckinCheckoutScreen = () => {
       <Text style={styles.date}>{new Date().toLocaleDateString()}</Text>
 
       <TouchableOpacity onPress={handleCheckin} style={styles.checkinButton}>
-        <Text style={styles.buttonText}>BẮT ĐẦU</Text>
+        <Text style={styles.buttonText}><Text style={styles.buttonText}>{imageUri ? 'ĐÃ CHECK-IN' : 'BẮT ĐẦU'}</Text></Text>
       </TouchableOpacity>
 
-      <Text style={styles.timer}>0:00:00</Text>
+
+      <Text style={styles.timer}>{timer}</Text>
 
       {imageUri && <Image source={{ uri: imageUri }} style={styles.capturedImage} />}
 
