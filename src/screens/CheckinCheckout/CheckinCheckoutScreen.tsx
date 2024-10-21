@@ -12,11 +12,11 @@ import Geolocation from 'react-native-geolocation-service';
 import { launchCamera } from 'react-native-image-picker';
 import { request, PERMISSIONS, RESULTS } from 'react-native-permissions';
 import Geocoder from 'react-native-geocoding';
-import { isIos, COLORS, GOOGLE_MAPS_API_KEY } from '../../utils/constants';
+import { isIos, COLORS } from '../../utils/constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Initialize Geocoding API
-Geocoder.init(GOOGLE_MAPS_API_KEY); // Replace with your Google Maps API key
+//Geocoder.init(GOOGLE_MAPS_API_KEY); // Replace with your Google Maps API key
 
 const CheckinCheckoutScreen = () => {
   const [imageUri, setImageUri] = useState<string | null>(null);
@@ -57,8 +57,8 @@ const CheckinCheckoutScreen = () => {
       async (position) => {
         const { latitude, longitude } = position.coords;
         try {
-          const geocodeResponse = await Geocoder.from(latitude, longitude);
-          const address = geocodeResponse.results[0].formatted_address;
+          //const geocodeResponse = await Geocoder.from(latitude, longitude);
+          const address = "";//geocodeResponse.results[0].formatted_address;
 
           setLocation({ latitude, longitude, address });
           Alert.alert('Location', `Address: ${address}\nLatitude: ${latitude}, Longitude: ${longitude}`);
